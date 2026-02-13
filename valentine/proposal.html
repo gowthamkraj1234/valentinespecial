@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Moment</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+font-family:'Inter',sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+background:linear-gradient(-45deg,#8e044d,#d81b60,#ad1457,#6a1b9a);
+background-size:400% 400%;
+animation:gradientMove 12s ease infinite;
+color:white;
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.container{
+text-align:center;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+padding:60px 70px;
+border-radius:30px;
+box-shadow:0 20px 60px rgba(0,0,0,0.4);
+animation:fadeIn 2s ease;
+position:relative;
+z-index:2;
+}
+
+h1{
+font-family:'Playfair Display',serif;
+font-size:42px;
+margin-bottom:50px;
+line-height:1.4;
+}
+
+.buttons{
+display:flex;
+gap:80px;
+justify-content:center;
+}
+
+button{
+padding:18px 60px;
+font-size:18px;
+font-weight:600;
+border-radius:50px;
+border:none;
+cursor:pointer;
+transition:0.3s;
+}
+
+#yesBtn{
+background:white;
+color:#8e044d;
+box-shadow:0 0 20px rgba(255,255,255,0.6);
+}
+
+#yesBtn:hover{
+transform:scale(1.1);
+box-shadow:0 0 40px rgba(255,255,255,0.9);
+}
+
+#noBtn{
+background:rgba(0,0,0,0.4);
+color:white;
+position:relative;
+}
+
+.heart{
+position:absolute;
+color:rgba(255,255,255,0.6);
+animation:float 10s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh) scale(1);opacity:1;}
+100%{transform:translateY(-10vh) scale(1.5);opacity:0;}
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+canvas{
+position:absolute;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+.credit{
+position:absolute;
+bottom:15px;
+right:20px;
+font-size:12px;
+opacity:0.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1 id="question"></h1>
+
+<div class="buttons">
+<button id="yesBtn">Yes</button>
+<button id="noBtn">No</button>
+</div>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<div class="credit">Made with ❤️ by Gowtham</div>
+
+<script>
+
+const name = localStorage.getItem("valentineName") || "You";
+
+document.getElementById("question").innerHTML =
+name + ", will you be my Valentine — and let this be the beginning of something that never fades?";
+
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+/* YES BUTTON SUPER CELEBRATION */
+yesBtn.onclick = function(){
+
+    screenFlash();
+    launchConfetti();
+    pulseEffect();
+
+    setTimeout(()=>{
+        window.location.href="forever.html";
+    },900);   // FAST transition
+};
+
+
+/* NO BUTTON ESCAPE */
+document.addEventListener("mousemove",function(e){
+const rect=noBtn.getBoundingClientRect();
+if(Math.abs(e.clientX-rect.left)<120 && Math.abs(e.clientY-rect.top)<120){
+noBtn.style.transform=
+`translate(${Math.random()*280-140}px,${Math.random()*200-100}px)`;
+}
+});
+
+
+/* 🔥 FASTER FLOATING HEARTS */
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.top=Math.random()*70+30+"vh";  // start mid-screen
+heart.style.fontSize=Math.random()*35+18+"px";
+heart.style.animationDuration="4s";  // faster
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),4000);
+}
+setInterval(createHeart,120);   // more frequent
+
+
+/* 💥 STRONG CONFETTI BLAST */
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+function launchConfetti(){
+
+for(let i=0;i<220;i++){
+
+let angle=Math.random()*2*Math.PI;
+let speed=Math.random()*15+6;
+
+let x=canvas.width/2;
+let y=canvas.height/2;
+
+let vx=Math.cos(angle)*speed;
+let vy=Math.sin(angle)*speed;
+
+let color=`hsl(${Math.random()*360},100%,60%)`;
+
+animateParticle(x,y,vx,vy,color);
+}
+}
+
+function animateParticle(x,y,vx,vy,color){
+
+let gravity=0.4;
+
+function draw(){
+ctx.beginPath();
+ctx.arc(x,y,4,0,Math.PI*2);
+ctx.fillStyle=color;
+ctx.fill();
+
+x+=vx;
+y+=vy;
+vy+=gravity;
+
+if(y<canvas.height){
+requestAnimationFrame(draw);
+}
+}
+draw();
+}
+
+
+
+function screenFlash(){
+document.body.style.transition="0.2s";
+document.body.style.filter="brightness(1.4)";
+setTimeout(()=>{
+document.body.style.filter="brightness(1)";
+},200);
+}
+
+function pulseEffect(){
+yesBtn.style.transform="scale(1.2)";
+setTimeout(()=>{
+yesBtn.style.transform="scale(1)";
+},200);
+}
+
+</script>
+
+
+</body>
+</html>

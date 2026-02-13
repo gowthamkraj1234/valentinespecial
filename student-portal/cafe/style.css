@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Header */
+.header {
+    background-color: #4b1e1e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Navigation */
+.nav {
+    background-color: #2c0f0f;
+    text-align: center;
+    padding: 10px;
+}
+
+.nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav a:hover {
+    color: #ffcc99;
+}
+
+/* Hero Section */
+.hero {
+
+    height: 350px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-box {
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.hero-box button {
+    padding: 10px 20px;
+    background-color: #c0392b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hero-box button:hover {
+    background-color: #e74c3c;
+}
+
+/* Menu */
+.menu {
+    padding: 40px;
+    text-align: center;
+}
+
+.menu-items {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.item {
+    background-color: white;
+    padding: 20px;
+    width: 220px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.item span {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    background-color: #2c0f0f;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Forever Begins</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+font-family:'Inter',sans-serif;
+color:white;
+overflow:hidden;
+background:radial-gradient(circle at center,#ff2e63,#b3125d,#4a148c);
+background-size:200% 200%;
+animation:bgShift 8s ease infinite;
+padding:20px;
+}
+
+@keyframes bgShift{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.container{
+max-width:650px;
+width:100%;
+animation:fadeZoom 1.8s ease;
+z-index:2;
+}
+
+h1{
+font-family:'Playfair Display',serif;
+font-size:clamp(30px,6vw,46px);
+margin-bottom:25px;
+opacity:0;
+animation:fadeIn 1.5s ease forwards;
+}
+
+p{
+font-size:clamp(18px,4.5vw,22px);
+line-height:1.8;
+opacity:0;
+animation:fadeIn 1.5s ease forwards;
+animation-delay:1s;
+}
+
+@keyframes fadeIn{
+to{opacity:1;}
+}
+
+@keyframes fadeZoom{
+from{opacity:0;transform:scale(0.9);}
+to{opacity:1;transform:scale(1);}
+}
+
+/* Faster floating hearts */
+.heart{
+position:absolute;
+color:rgba(255,255,255,0.7);
+animation:floatFast 5s linear infinite;
+}
+
+@keyframes floatFast{
+0%{transform:translateY(60vh) scale(1);opacity:1;}
+100%{transform:translateY(-10vh) scale(1.5);opacity:0;}
+}
+
+.credit{
+position:absolute;
+bottom:15px;
+right:20px;
+font-size:12px;
+opacity:0.6;
+}
+
+/* Mobile fine tuning */
+@media(max-width:600px){
+.container{
+padding:10px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1 id="title"></h1>
+<p id="message"></p>
+</div>
+
+<div class="credit">Made with ❤️ by Gowtham</div>
+
+<script>
+
+const name=localStorage.getItem("valentineName")||"My Love";
+
+document.getElementById("title").innerHTML=name + ", this feels right.";
+
+document.getElementById("message").innerHTML=
+"I don’t want a perfect story. I want a real one — with you. <br><br>" +
+"If forever has a meaning, I want to continue with you!!!";
+
+/* Faster hearts */
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=Math.random()*30+18+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createHeart,150);
+
+</script>
+
+</body>
+</html>
